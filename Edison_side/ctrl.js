@@ -203,7 +203,7 @@ lcd.send({
         row: 0,
         column: 0
     },
-    strValue: "Botting......"
+    strValue: "Conntcting......"
  });
 
 process.on('SIGINT', function()
