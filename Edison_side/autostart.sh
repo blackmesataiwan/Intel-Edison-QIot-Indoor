@@ -1,3 +1,3 @@
 #!/bin/sh
-cd /home/root/Edison_Inbox
+# run srcipt in non-stop mode
 forever start -s --killSignal SIGINT boot.js

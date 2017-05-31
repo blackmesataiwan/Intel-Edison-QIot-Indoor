@@ -1,29 +1,29 @@
 var groveSensor = require('jsupm_grove');
 
-// Create the relay switch object using GPIO pin 4
+/**
+ * Create the relay switch object using GPIO pin 4
+ */
 var relay = new groveSensor.GroveRelay(4);
 
 process.on('message', function(data) {
     switch (data.command) {
-        case "on",1:
+        case 'on':
+        case 1:
             relay.on();
-            console.log(relay.name() + " is on"); 
+            console.log('%s is on', relay.name());
             break;
-        
-        case "off",0:
+        case 'off':
+        case 0:
             relay.off();
-            console.log(relay.name() + " is off"); 
+            console.log('%s is off', relay.name());
             break;
-    
         default:
             break;
-    } 
+    }
 });
 
-// exit on ^C
-process.on('SIGINT', function()
-{
-    console.log("Exiting.");
+process.on('SIGINT', function() {
+    // exit on ^C
+    console.log('Exiting.');
     process.exit(0);
 });
-
