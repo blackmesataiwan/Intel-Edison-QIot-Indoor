@@ -62,10 +62,16 @@ Connect Grove Indoor Environment Kit for Intel Edison to QNAP NAS via QIoT Suite
 * Import the iot_inbox.json file in the IoT Application Panel.
 * Go to "Thing" panel and click "Connect a Device" in the action section.
 * Choose MQTTS protocol
-* Download certificates file and put in Edison_side/ssl folder
-* Download resource info file and put in Edison_side/res folder
-### Upload sample code to your Edison
-* Upload Edison_side/ folder by Filezilla or WinSCP
+* Download certificates file
+* Download resource info file
+### Download sample code on Edison
+
+
+### Upload certificates and resourceinfo file to your Edison
+You can upload files to Edison by Filezilla or WinSCP tools
+* Upload certificates to /Edison_side/ssl
+* Upload resourceinfo.json to /Edison_side/res
+
 ### Run sample code on Intel Edison and connect to QIoT
   ~~~
   cd Edison_side/
@@ -80,8 +86,3 @@ Connect Grove Indoor Environment Kit for Intel Edison to QNAP NAS via QIoT Suite
   ~~~
   sh autostart.sh
   ~~~
-
-
-
-
-
