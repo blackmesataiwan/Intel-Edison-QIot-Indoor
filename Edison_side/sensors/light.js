@@ -1,26 +1,24 @@
 var groveSensor = require('jsupm_grove');
 
-// Create the light sensor object using AIO pin 2
+/**
+ * Create the light sensor object using AIO pin 2
+ */
 var light = new groveSensor.GroveLight(2);
+var lastValue = 0;
 
-var lestValue = 0;
-
-// Output data every second until interrupted
-var myInterval = setInterval(function()
-{
-	var lightValue = light.value();
-    if (lestValue != lightValue){
-        lestValue = lightValue;
-        process.send(lightValue);
-        console.log("Light: " + lightValue + "lux");
+/**
+ * Output data every second until interrupted
+ */
+var myInterval = setInterval(function() {
+    if (lastValue !== light.value()) {
+        lastValue = light.value();
+        process.send(light.value());
     }
 }, 1000);
 
-// exit on ^C
-process.on('SIGINT', function()
-{
+process.on('SIGINT', function() {
+    // exit on ^C
     clearInterval(myInterval);
-    console.log("Exiting.");
+    console.log('Exiting.');
     process.exit(0);
 });
-
