@@ -86,3 +86,8 @@ You can upload files to Edison by Filezilla or WinSCP tools
   ~~~
   sh autostart.sh
   ~~~
+
+### Auto setup environment and auto start sample code on boot 
+  ~~~
+  sh setup_autostart.sh
+  ~~~
