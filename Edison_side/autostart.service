@@ -7,7 +7,7 @@ Type=simple
 RemainAfterExit=true
 ExecStart=/home/root/Edison_Inbox/autostart.sh
 Environment="HOME=/home/root"
-WorkingDirectory=/home/root/
+WorkingDirectory=/home/root/Edison_Inbox/
 
 [Install]
 WantedBy=multi-user.target

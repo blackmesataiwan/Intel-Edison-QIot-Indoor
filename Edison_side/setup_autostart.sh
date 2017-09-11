@@ -3,7 +3,6 @@ echo "src intel-iotdk https://iotdk.intel.com/repos/3.5/intelgalactic/opkg/i586/
 opkg update
 opkg upgrade mraa upm
 npm install
-npm install forever -g
 chmod 777 autostart.sh
 cp autostart.service /lib/systemd/system/
 systemctl daemon-reload

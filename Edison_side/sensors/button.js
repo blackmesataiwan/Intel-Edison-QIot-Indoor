@@ -1,26 +1,35 @@
 var upmButton = require('jsupm_button');
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
 
 /**
  * Create the button object using GPIO pin 8
  */
-var button = new upmButton.Button(8);
-var lastValue = 0;
+
+var sensorButton = function () {
+    this.button = new upmButton.Button(8);
+    this.lastValue = 0;
+    this.myInterval = setInterval(getButtonValue.bind(this), 100);
+    EventEmitter.call(this);
+}
+util.inherits(sensorButton, EventEmitter);
+
+var getButtonValue = function () {
+    var buttonValue = this.button.value();
+    if (this.lastValue !== buttonValue) {
+        this.lastValue = buttonValue;
+        this.emit("message", buttonValue);
+        //process.send(buttonValue);
+        console.log('Button State: %d', buttonValue);
+    }
+}
+
+//this.button = new upmButton.Button(8);
+//var lastValue = 0;
 
 /**
  * Output data every second until interrupted
  */
-var myInterval = setInterval(function() {
-    var buttonValue = button.value();
-    if (lastValue !== buttonValue) {
-        lastValue = buttonValue;
-        process.send(buttonValue);
-        console.log('Button State: %d', buttonValue);
-    }
-}, 100);
 
-process.on('SIGINT', function() {
-    // exit on ^C
-    clearInterval(myInterval);
-    console.log('Exiting.');
-    process.exit(0);
-});
+
+module.exports = sensorButton;

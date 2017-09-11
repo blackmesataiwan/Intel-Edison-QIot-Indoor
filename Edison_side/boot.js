@@ -11,8 +11,8 @@ var os = require('os');
 var readline = require('readline');
 var sleep = require('sleep');
 
-var lcd = childProcess.fork('./sensors/rgb_lcd.js');
-var button = childProcess.fork('./sensors/button.js');
+var lcd = childProcess.fork('./sensors_old/rgb_lcd.js');
+var button = childProcess.fork('./sensors_old/button.js');
 var networkInterfaces = os.networkInterfaces();
 var ctrl;
 var rl = readline.createInterface({
@@ -50,14 +50,25 @@ lcd.send({
     strValue: 'Input res file!!'
 });
 
-lcd.send({
-    command: 'write',
-    setCursor: {
-        row: 1,
-        column: 0
-    },
-    strValue: 'IP:' + networkInterfaces.wlan0[0].address
-});
+try {
+    lcd.send({
+        command: 'write',
+        setCursor: {
+            row: 1,
+            column: 0
+        },
+        strValue: 'IP:' + networkInterfaces.wlan0[0].address
+    });
+} catch (error) {
+    lcd.send({
+        command: 'write',
+        setCursor: {
+            row: 1,
+            column: 0
+        },
+        strValue: 'NO WIFI IP!!'
+    });
+}
 
 rl.question('Please input resource file before clicking button!', function(answer) {
     // rl.close();

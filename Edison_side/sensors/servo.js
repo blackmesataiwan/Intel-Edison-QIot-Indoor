@@ -3,14 +3,14 @@ var groveSensor = require('jsupm_servo');
 /**
  * Create the relay switch object using GPIO pin 0
  */
-var servo = new groveSensor.Servo(6);
 
-process.on('message', function(data) {
-    servo.setAngle(data);
-});
+var sensorServo = function () {
+    this.servo = new groveSensor.Servo(6);
+    this.setAngle = setAngle;
+}
 
-process.on('SIGINT', function() {
-    // exit on ^C
-    console.log('Exiting.');
-    process.exit(0);
-});
+function setAngle(data){
+    this.servo.setAngle(data);
+}
+
+module.exports = sensorServo;
