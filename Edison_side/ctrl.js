@@ -103,13 +103,11 @@ connection.on('message', function(data) {
             console.log('relay: %s', data.message.value);
             console.log('------------------------');
             relay.relayCtrl(data.message.value);
-            //relay.send({command: data.message.value});
             break;
         case 'servo':
             console.log('servo: %s', data.message.value);
             console.log('------------------------');
             servo.setAngle(data.message.value);
-            //serove.send(data.message.value);
             break;
         case 'buzzer':
             console.log('buzzer: %s', data.message.value);
@@ -118,22 +116,18 @@ connection.on('message', function(data) {
             switch (dataJson.command) {
                 case 'setVolume':
                     buzzer.setVolume(dataJson.volume);
-                    //myBuzzer.setVolume(data.volume);
                     console.log('volume: %d', dataJson.volume);
                     break;
                 case 'playSound':
                     buzzer.playSound(dataJson.tone, dataJson.delay);
-                    //myBuzzer.playSound(chords[data.tone], data.delay);
                     break;
                 case 'stopSound':
                     buzzer.stopSound();
                     console.log("STOP!!!!!!!");
-                    //myBuzzer.stopSound();
                     break;
                 default:
                     break;
             }
-            //buzzer.send(JSON.parse(data.message.value));
             break;
         /***************************/
         case 'lcd':
@@ -149,7 +143,6 @@ connection.on('message', function(data) {
 
 pir.on('message', function(data) {
     connection.send({id: 'motion', value: data});
-    //connection.publishById('motion', data);
     pirValue = data;
     showLCD();
 });
@@ -157,14 +150,12 @@ pir.on('message', function(data) {
 uv.on('message', function(volts, intensity) {
     var data = { volts: volts, intensity: intensity };
     connection.send({id: 'uv', value: data.intensity});
-    //connection.publishById('uv', data.intensity);
     uvValue = data;
     showLCD();
 });
 
 light.on('message', function(data) {
     connection.send({id: 'light', value: data});
-    //connection.publishById('light', data);
     lightValue = data;
     showLCD();
 });
@@ -172,20 +163,17 @@ light.on('message', function(data) {
 moisture.on('message', function(value, level) {
     var data = { value: value, level: level };
     connection.send({id: 'moisture', value: data.value});
-    //connection.publishById('moisture', data.value);
     moistureValue = data;
     showLCD();
 });
 
 button.on('message', function(data) {
     connection.send({id: 'button', value: data});
-    //connection.publishById('button', data);
     showLCD();
 });
 
 encoder.on('message', function(data) {
     connection.send({id: 'encoder', value: data});
-    //connection.publishById('encoder', data);
     encoderPos = data % 6;
     if (encoderPos < 0) {
         encoderPos *= -1;
@@ -197,8 +185,6 @@ th02.on('message', function(tempValue, humValue) {
     var data = { temperature: tempValue, humidity: humValue };
     connection.send({id: 'temp', value: data.temperature});
     connection.send({id: 'hum', value: data.humidity});
-    //connection.publishById('temp', data.temperature);
-    //connection.publishById('hum', data.humidity);
     th02Value = data;
     showLCD();
 });
@@ -210,42 +196,3 @@ process.on('SIGINT', function() {
     connection.kill();
     process.exit(0);
 });
-
-/*
-button.on('message', function (value) {
-    console.log("testt:" + value);
-})
-
-light.on('message', function (value) {
-    console.log("light:" + value);
-})
-
-moisture.on('message', function (value, level) {
-    console.log("Moisture:" + value + "\nLevel:" + level);
-})
-
-pir.on('message', function (value) {
-    console.log("PIR:" + value);
-})
-
-
-
-encoder.on('message', function (value) {
-    console.log("RTL:" + value);
-})
-
-
-
-th02.on('message', function (tempValue, humValue) {
-    console.log("temp:" + tempValue + "\nhum:" + humValue);
-})
-
-uv.on('message', function (volts, intensity) {
-    console.log("volts:" + volts + "\nintensity:" + intensity);
-})
-
-
-
-lcd.clear();
-lcd.write('HIIII!!',0,0);
-*/

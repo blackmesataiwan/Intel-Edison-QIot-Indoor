@@ -20,16 +20,12 @@ connection.on('message', function(data) {
     switch (data.id) {
         case 'relay':
             process.send({id: data.id,message: data.message});
-            //relay.relayCtrl(data.message.value);
-            //relay.send({command: data.message.value});
             break;
         case 'servo':
             process.send({id: data.id,message: data.message});
-            //serove.send(data.message.value);
             break;
         case 'buzzer':
             process.send({id: data.id,message: data.message});
-            //buzzer.send(JSON.parse(data.message.value));
             break;
         default:
             break;
