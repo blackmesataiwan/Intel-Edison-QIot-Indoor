@@ -91,3 +91,20 @@ You can upload files to Edison by Filezilla or WinSCP tools
   ~~~
   sh setup_autostart.sh
   ~~~
+  
+  * Start service
+  ~~~
+  systemctl start autostart.service
+  ~~~
+  * Stop service
+  ~~~
+  systemctl stop autostart.service
+  ~~~
+  * Restart service
+  ~~~
+  systemctl restart autostart.service
+  ~~~
+  * Status service
+  ~~~
+  systemctl status autostart.service
+  ~~~
