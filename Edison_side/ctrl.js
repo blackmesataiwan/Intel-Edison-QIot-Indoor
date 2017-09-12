@@ -136,6 +136,10 @@ connection.on('message', function(data) {
         case 'showIP':
             showIP();
             break;
+        /***************************/
+        case 'ERROR':
+            lcd.write(data.message,0,0);
+            break;
         default:
             break;
     }

@@ -4,10 +4,14 @@ var qiot = require('./lib/qiot');
  * Setup connection options
  */
 var connection = new qiot(qiot.protocol.MQTT);
-var connectionOption = connection.readResource(
-    './res/resourceinfo.json', './ssl/');
+try {
+    var connectionOption = connection.readResource(
+        './res/resourceinfo.json', './ssl/');
+    connection.connect(connectionOption);
+} catch (error) {
+    process.send({id: 'ERROR',message: "ERROR RES_INFO!"});
+}
 
-connection.connect(connectionOption);
 connection.on('connect', function(data) {
     process.send({id: 'lcd',message: 'QIoT Connected!!'});
     process.send({id: 'showIP'});
