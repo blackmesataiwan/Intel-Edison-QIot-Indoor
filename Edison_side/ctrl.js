@@ -46,9 +46,22 @@ var lcd = new sensorLcd();
 
 function showIP() {
     try {
-        lcd.write(util.format('IP:%s', networkInterfaces.wlan0[0].address),1,0);
+        for (var inter in networkInterfaces) {
+            if (inter != 'lo'){
+                for (var count in networkInterfaces[inter]){
+                    if (networkInterfaces[inter][count].address != 'undefined'){
+                        lcd.write(util.format('IP:%s', networkInterfaces[inter][count].address),1,0);
+                        break;
+                    }
+                }
+                break;
+            }
+            else{
+                lcd.write("NO ANY IP!!",1,0);
+            }
+        }
     } catch (error) {
-        lcd.write("NO WIFI IP!!",1,0);
+        lcd.write("NO IP!!",1,0);
     }
     
 }

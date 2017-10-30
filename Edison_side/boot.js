@@ -51,14 +51,34 @@ lcd.send({
 });
 
 try {
-    lcd.send({
-        command: 'write',
-        setCursor: {
-            row: 1,
-            column: 0
-        },
-        strValue: 'IP:' + networkInterfaces.wlan0[0].address
-    });
+    for (var inter in networkInterfaces) {
+        if (inter != 'lo'){
+            for (var count in networkInterfaces[inter]){
+                if (networkInterfaces[inter][count].address != 'undefined'){
+                    lcd.send({
+                        command: 'write',
+                        setCursor: {
+                            row: 1,
+                            column: 0
+                        },
+                        strValue: 'IP:' + networkInterfaces[inter][count].address
+                    });
+                    break;
+                }
+            }
+            break;
+        }
+        else{
+            lcd.send({
+                command: 'write',
+                setCursor: {
+                    row: 1,
+                    column: 0
+                },
+                strValue: 'NO ANY IP!!'
+            });
+        }
+    }
 } catch (error) {
     lcd.send({
         command: 'write',
@@ -66,7 +86,7 @@ try {
             row: 1,
             column: 0
         },
-        strValue: 'NO WIFI IP!!'
+        strValue: 'NO IP!!'
     });
 }
 
@@ -105,3 +125,4 @@ process.on('SIGINT', function() {
     ctrl.kill('SIGINT');
     process.exit(0);
 });
+    

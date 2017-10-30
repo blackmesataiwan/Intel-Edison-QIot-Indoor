@@ -36,6 +36,14 @@ connection.on('message', function(data) {
     }
 });
 
+connection.on('offline', function(data) {
+    process.send({id: 'lcd',message: 'QIoT Offline!!'});
+});
+
+connection.on('close', function(data) {
+    process.send({id: 'lcd',message: 'QIoT Close!!'});
+});
+
 process.on('message', function(data) {
     connection.publishById(data.id, data.value);
 });

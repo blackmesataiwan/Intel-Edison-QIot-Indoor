@@ -104,6 +104,7 @@ var connect = function connect(option) {
         console.log("something wrong with mqtt service, err reason: " + err);
         console.log("=========================================");
         self.mqttclient = null;
+        self.emit("error", err);
     });
     this.mqttclient.on('message', function(topic, message) {
         var id = null;
@@ -120,6 +121,12 @@ var connect = function connect(option) {
             'message': JSON.parse(message.toString())
         };
         self.emit("message", data);
+    });
+    this.mqttclient.on('offline', function() {
+        self.emit("offline");
+    });
+    this.mqttclient.on('close', function() {
+        self.emit("close");
     });
 }
 
