@@ -200,3 +200,11 @@ process.on('SIGINT', function() {
     connection.kill();
     process.exit(0);
 });
+
+process.on('uncaughtException', function(err) {
+    console.log('err :' + err);
+    lcd.write(util.format('Something ERR'),0,0);
+    lcd.write(util.format('Restarting.....'),1,0);
+    connection.kill();
+    process.exit(0);
+});

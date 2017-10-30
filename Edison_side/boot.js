@@ -90,6 +90,11 @@ button.on('message', function(data) {
         lcd.kill('SIGINT');
         button.kill('SIGINT');
         ctrl = childProcess.fork('./ctrl.js');
+        ctrl.on('close', function(err) {
+            console.log('ctrl_err : ' + err);
+            ctrl.kill('SIGINT');
+            process.exit(0);
+        });
     }
 });
 
